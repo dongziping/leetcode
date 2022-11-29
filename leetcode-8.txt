@@ -1,0 +1,94 @@
+public class Solution {
+    public int myAtoi(String s) {
+//        String s = " -42";
+        String newstr  = s.trim();
+        String finalstr = "";
+        char[] myChain = newstr.toCharArray();
+        for(int i = 0 ;i < newstr.length() ; i++){
+            Byte bByte = (byte) myChain[i];
+
+
+            if(myChain[0] == '+' && i==0){
+                finalstr = finalstr + "+";
+                continue;
+            }else if(myChain[0] == '-' && i==0){
+                finalstr =finalstr + "-";
+                continue;
+            }
+
+            if(bByte < 48 || bByte >57){
+                break;
+            }
+            finalstr = finalstr + String.valueOf(myChain[i]);
+        }
+
+        String finalstr2 = "";
+        char[] arr = finalstr.toCharArray();
+
+        if(finalstr == ""){
+//            System.out.println(0);
+            return 0;
+        }
+
+        if(arr[0] == '-'){
+            finalstr2 = generateNum(1 , arr);
+            finalstr2 = "-" + finalstr2;
+        }else if(arr[0] == '+'){
+            finalstr2 = generateNum(1 , arr);
+        }else{
+            finalstr2 = generateNum(0, arr);
+        }
+
+        char[] arr2 = finalstr2.toCharArray();
+
+        if(arr2[0] == '-'){
+            try {
+                int finalnum = Integer.parseInt(finalstr2);
+//                System.out.println(finalnum);
+                return finalnum;
+            }catch(Exception e){
+//                System.out.println(-2147483648);
+                return -2147483648;
+            }
+
+        }else{
+            try {
+                int finalnum = Integer.parseInt(finalstr2);
+                return finalnum;
+            }catch(Exception e){
+//                System.out.println(2147483647);
+                return 2147483647;
+            }
+        }
+    }
+
+
+    public static String generateNum(int j,char[] arr){
+
+        boolean flag = false;
+        String finalstr2 = "";
+
+        Byte bByte = (byte) arr[0];
+
+        if(arr.length == 1 && (bByte < 48 || bByte > 57)){
+            return "0";
+        }
+
+        for(int i = j; i < arr.length ; i++){
+            if(arr[i] != '0'){
+                flag = true;
+            }
+
+            if(flag == false){
+                continue;
+            }else{
+                finalstr2 = finalstr2 +String.valueOf(arr[i]);
+            }
+        }
+
+        if(flag == false){
+            return "0";
+        }
+        return finalstr2;
+    }
+}
